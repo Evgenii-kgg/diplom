@@ -21,20 +21,16 @@ function App() {
           <nav>
           </nav>
           <Header />
-
             <div className="page">
               <Switch>
               <Route path="/" exact component={MainPage} />
-
-              <Route path='/catalog' component={Catalog} />
-                <Route path="/:id" component={Item} />
-              {/*</Route>*/}
+              <Route path='/catalog' exact component={Catalog} />
+                <Route path="/catalog/:id" component={Item} />
               <Route path="/about" component={About} />
               <Route path="/contacts" component={Contacts} />
-              {/*<Route path="*" component={NotFound}/>*/}
+              <Route path="*" component={NotFound}/>
               </Switch>
             </div>
-
           <Footer />
         </div>
       </Router>

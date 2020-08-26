@@ -54,7 +54,7 @@ class Catalog extends React.Component {
     }
     onSelectShoes = (item) => {
         console.log("push", item)
-        return this.props.history.push(`/${item}`)
+        return this.props.history.push(`/catalog/${item}`)
     }
 
     render() {

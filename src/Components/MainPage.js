@@ -57,7 +57,7 @@ class MainPage extends React.Component {
     }
     onSelectShoes = (item) => {
          console.log("push", item)
-        return this.props.history.push(`/${item}`)
+        return this.props.history.push(`/catalog/${item}`)
     }
 
     render() {
@@ -72,6 +72,9 @@ class MainPage extends React.Component {
                 </div>
                 <div className={"hits"}>
                     <List
+                        onSelectItem={(item) => {
+                            this.onSelectShoes(item)
+                        }}
                         items={this.state.top}/>
                 </div>
                 <div className={'catalog'} style={{textAlign: 'center'}}>
