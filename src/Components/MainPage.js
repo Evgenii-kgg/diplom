@@ -94,22 +94,6 @@ class MainPage extends React.Component {
                         items={this.state.items}
                     />
                 </div>
-                {/*<div className={'button'}>*/
-                }
-                {/*    <Button variant="contained"*/
-                }
-                {/*            color="primary"*/
-                }
-                {/*        // onClick={}*/
-                }
-                {/*    >*/
-                }
-                {/*        Заказать*/
-                }
-                {/*    </Button>*/
-                }
-                {/*</div>*/
-                }
             </div>
         )
     }

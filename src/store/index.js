@@ -1,9 +1,9 @@
 import {createStore, combineReducers} from "redux";
-import basketAddReducer from "../redusers/backetAdd";
+import basketAddReducer from "../redusers/backetReducer";
 
 
 const reducer = combineReducers({
-    basketAdd: basketAddReducer
+    basket: basketAddReducer
 });
 
 const store = createStore(reducer,

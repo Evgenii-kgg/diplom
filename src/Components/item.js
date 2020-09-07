@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {netWorkService} from "../api";
+import { Link, withRouter } from "react-router-dom";
 
 class Item extends React.Component {
     constructor(props) {
@@ -34,8 +35,12 @@ class Item extends React.Component {
         return {name, item};
     }
 
+    Basket = () => {
+        return this.props.history.push(`/cart`)
+    }
+
     render() {
-        console.log(this.state.item.images);
+        // console.log(this.state.item.images);
 
         const rows = [
             this.createData('Артикул', `${this.state?.item.sku}`),
@@ -77,7 +82,7 @@ class Item extends React.Component {
                     <p>Количество </p>
                 </div>
                 <div>
-                    <button type="button" className="btn btn-danger">В корзину</button>
+                    <button type="button" className="btn btn-danger" onClick={this.Basket} >В корзину</button>
                 </div>
 
             </div>
@@ -85,4 +90,4 @@ class Item extends React.Component {
     }
 }
 
-export default Item;
+export default withRouter(Item);

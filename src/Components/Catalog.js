@@ -28,16 +28,14 @@ class Catalog extends React.Component {
         return netWorkService({url: "categories", method: "GET"})
             .then((response) => {
                 console.log("ответ", response);
-                this.setState({loader: true});
-                this.setState({categories: response});
+                this.setState({loader: true, categories: response});
             });
     };
     getCatalog = () => {
         return netWorkService({url: "items ", method: "GET"})
             .then((response) => {
                 console.log("ответ", response);
-                this.setState({loader: true});
-                this.setState({items: response});
+                this.setState({loader: true, items: response});
             });
     };
 
@@ -45,8 +43,7 @@ class Catalog extends React.Component {
         return netWorkService({url: `items?g=${this.state.search}`, method: "GET"})
             .then((response) => {
                 console.log("ответ", response);
-                this.setState({loader: true});
-                this.setState({items: response});
+                this.setState({loader: true, items: response});
             });
     };
     onSelectItem = (item) => {

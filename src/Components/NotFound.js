@@ -1,14 +1,28 @@
 import React from "react";
-
+//import * as style from '../style.css'
 
 function NotFound(props) {
     console.log(props)
     const items = props.items
-    return (
-        <div>
-            <img src="https://i2.wp.com/learn.onemonth.com/wp-content/uploads/2017/08/1-10.png?fit=845%2C503&ssl=1"  style={{height: '500px'}} />
-        </div>
-    )
+    return <div>
+        <main className="container">
+            <div className="row">
+                <div className="col">
+                    <div className="banner">
+                        <img src="/img/banner.jpg" className="img-fluid" alt="К весне готовы!"></img>
+                        <h2 className="banner-header">К весне готовы!</h2>
+                    </div>
+
+                    <section className="top-sales">
+                        <h2 className="text-center">Страница не найдена</h2>
+                        <p>
+                            Извините, такая страница не найдена!
+                        </p>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
 }
 
 export default NotFound;
