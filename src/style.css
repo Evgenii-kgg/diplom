@@ -42,7 +42,7 @@ section {
     height: 32px;
     width: 32px;
     margin: 0 10px;
-    background-image: url(../img/header-controls-sprite.png);
+    /*background-image: url(../img/header-controls-sprite.png);*/
     background-repeat: no-repeat;
     cursor: pointer;
 }
@@ -448,6 +448,7 @@ section {
 .catalog-item-size.selected {
     background: #727e86;
     border-radius: 15px;
+    border-width: 1px;
     color: #fff;
 }
 

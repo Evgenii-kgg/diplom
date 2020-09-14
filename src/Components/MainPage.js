@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import List from "./List";
 
 
+
 class MainPage extends React.Component {
     constructor(props) {
         super(props);
@@ -44,7 +45,7 @@ class MainPage extends React.Component {
             });
     };
     getCatalog = () => {
-        return netWorkService({url: "items ", method: "GET"})
+        return netWorkService({url: "items", method: "GET"})
             .then((response) => {
                 console.log("ответ", response);
                 this.setState({loader: true});
@@ -58,6 +59,15 @@ class MainPage extends React.Component {
     onSelectShoes = (item) => {
          console.log("push", item)
         return this.props.history.push(`/catalog/${item}`)
+    }
+
+    LoadMore = () => {
+        return netWorkService({url: "items?offset=6", method: "GET"})
+            .then((response)=> {
+                console.log("еще", response)
+
+            })
+        console.log("more")
     }
 
     render() {
@@ -88,11 +98,15 @@ class MainPage extends React.Component {
                 </div>
                 <div className={'catalog-list'}>
                     <List
+                        className="row"
                         onSelectItem={(item) => {
                             this.onSelectShoes(item)
                         }}
                         items={this.state.items}
                     />
+                </div>
+                <div className="text-center">
+                    <button className="btn btn-outline-primary" onClick={this.LoadMore}>Загрузить ещё</button>
                 </div>
             </div>
         )

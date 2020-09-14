@@ -1,7 +1,7 @@
 import React from "react";
 import {useSelector, useDispatch, connect} from "react-redux";
 import {netWorkService} from "../api";
-import {changePhone, changeAddress, addItems} from "../actions/actionCreators";
+import {changePhone, changeAddress, addItems, deleteItems} from "../actions/actionCreators";
 
 
 function Basket(props) {
@@ -10,13 +10,19 @@ function Basket(props) {
     const dispatch = useDispatch();
 
     const Order = () => {
-        return netWorkService({url: "categories", method: "POST", body: {
-            owner:{phone: props.phone, address:props.address, item:props.items}
-            }})
+        return netWorkService({
+            url: "categories", method: "POST", body: {
+                owner: {phone: props.phone, address: props.address, item: props.items}
+            }
+        })
             .then((response) => {
                 console.log("ответ", response);
                 // this.setState({categories: response, loader: true});
             });
+    }
+
+    const deleteItem = (id) => {
+        dispatch(deleteItems(id))
     }
 
     console.log(props)
@@ -39,21 +45,24 @@ function Basket(props) {
                         </thead>
                         <tbody>
                         {props.items?.map(item => {
-                            return (<tr>
+                            return (
+                                <tr>
                                 <th scope="row">1</th>
-                                <td><a href="/products/1.html">Босоножки 'MYER'</a></td>
+                                <td><a href="/products/1.html">{item.title}</a></td>
                                 <td>18 US</td>
-                                <td>1</td>
-                                <td>34 000 руб.</td>
-                                <td>34 000 руб.</td>
+                                <td>{item.count}</td>
+                                <td>{item.price} руб.</td>
+                                <td>{item.price * item.count}</td>
                                 <td>
-                                    <button className="btn btn-outline-danger btn-sm">Удалить</button>
+                                    <button className="btn btn-outline-danger btn-sm" onClick={()=> deleteItem(item.id)}>Удалить
+                                    </button>
                                 </td>
-                            </tr>)
+                            </tr>
+                            )
                         })}
                         <tr>
                             <td colSpan="5" className="text-right">Общая стоимость</td>
-                            <td>34 000 руб.</td>
+                            <td>{props.items.map(item=> item.price * item.count).reduce((a,b)=> a+b)}</td>
                         </tr>
                         </tbody>
                     </table>

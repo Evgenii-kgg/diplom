@@ -5,6 +5,8 @@ import { Link, withRouter } from "react-router-dom";
 
 import Catalog_list from "./Catalog_list";
 import List from "./List";
+import {changeSearchGlobal} from "../actions/actionCreators";
+import {connect} from "react-redux";
 
 class Catalog extends React.Component {
     constructor(props) {
@@ -15,11 +17,13 @@ class Catalog extends React.Component {
             categories: [],
             items: [],
             more: '',
-            search: '',
+            search: props.match.params.search || '', // change id
         }
+        console.log(props.match)
     };
 
     componentDidMount() {
+        this.getSearch()
         this.getCatalog();
         this.getCatalogTitle();
     };
@@ -40,9 +44,10 @@ class Catalog extends React.Component {
     };
 
     getSearch = () => {
+        console.log(this.state.search)
         return netWorkService({url: `items?g=${this.state.search}`, method: "GET"})
             .then((response) => {
-                console.log("ответ", response);
+                console.log("поиск", response);
                 this.setState({loader: true, items: response});
             });
     };
@@ -55,32 +60,27 @@ class Catalog extends React.Component {
     }
 
     render() {
-         //console.log(this.state.search)
+         console.log(this.props.searchGlobal)
+        // console.log(this.props.match.params)
         return (
             <div className={"catalog_page"}>
                 <div className={"add"}>
                     <img src="https://github.com/netology-code/ra16-diploma/blob/master/html/img/banner.jpg?raw=true"
                          style={{width:'100%'}}/>
                 </div>
-                <div style={{textAlign: 'center'}}>
-                    <h1>Каталог</h1>
-                </div>
-                <div style={{display: 'flex', justifyContent: 'center'}}>
-                    <div className="input-group mb-3">
-                        <input type="text"
-                               className="form-control"
-                               placeholder="Recipient's username"
-                               aria-label="Recipient's username"
-                               value={this.state.search}
-                               onChange={(event) => this.setState({search: event.target.value})}
-                               aria-describedby="button-addon2"/>
-                        <div className="input-group-append">
-                            <button className="btn btn-outline-secondary"
-                                    type="button" id="button-addon2">Search
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <section className="catalog">
+                    <h2 className="text-center">Каталог</h2>
+
+                    <form className="catalog-search-form form-inline">
+                        <input className="form-control"
+                               placeholder="Поиск"
+                               value={this.props.searchGlobal}
+                               onChange={(event) => this.props.dispatch(changeSearchGlobal(event.target.value))}>
+                        </input>
+                        <button onClick={this.getSearch}>
+                            Search
+                        </button>
+                    </form>
                 <div className={'catalog_list'} style={{textAlign: 'center'}}>
                     <Catalog_list
                         onSelectItem={(item) => {
@@ -97,9 +97,12 @@ class Catalog extends React.Component {
                         items={this.state.items}
                     />
                 </div>
+                </section>
             </div>
         )
     }
 }
 
-export default withRouter(Catalog);
+export default withRouter(connect(state=>({
+    searchGlobal: state.app.searchGlobal
+}))(Catalog));

@@ -26,6 +26,7 @@ function App() {
                     <Switch>
                         <Route path="/" exact component={MainPage}/>
                         <Route path='/catalog' exact component={Catalog}/>
+                        {/*<Route path='/catalog/:search' exact component={Catalog}/>*/}
                         <Route path="/catalog/:id" component={Item}/>
                         <Route path="/about" component={About}/>
                         <Route path="/cart" component={Basket}/>

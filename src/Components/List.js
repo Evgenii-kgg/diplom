@@ -6,7 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { Link, withRouter } from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import {addItems} from "../actions/actionCreators";
 import {connect} from "react-redux";
 
@@ -22,34 +22,21 @@ class List extends React.Component {
         return (
             <div className={"hits-list"} style={{columnCount: 3, display: 'flex'}}>
                 {this.props.items.map((item) => (
-                    <Card className={"classes.root"}
-                          style={{margin: '5px', width: '100%'}}
-                          key={item.id}
-                          >
-                        <CardActionArea
-                            onClick={() => this.props.onSelectItem(item.id)}>
-                            <CardMedia
-                                className={"classes.media"}
-                                style={{height: "140px"}}
-                                image={item.images}
-                                title="Contemplative Reptile"
-                            />
-                            <CardContent>
-                                <Typography gutterBottom variant="subtitle1" component="h2">
-                                    {item.title}
-                                </Typography>
-                                <Typography variant="body2" color="textSecondary" component="p">
-                                    {item.price}
-                                </Typography>
-                            </CardContent>
-                        </CardActionArea>
-                            <Button variant="contained"
-                                    color="primary"
-                                    onClick={()=> this.Basket(item)}
-                            >
-                                Заказать
-                            </Button>
-                    </Card>
+                    <div className="col-4">
+                        <div className="card catalog-item-card">
+                            <img src={item.images}
+                                 onClick={() => this.props.onSelectItem(item.id)}
+                                 className="card-img-top img-fluid" alt=""></img>
+                            <div className="card-body">
+                                <div onClick={() => this.props.onSelectItem(item.id)}>
+                                <p className="card-text">{item.title}</p>
+                                <p className="card-text">{item.price} руб.</p>
+                                </div>
+                                <a  className="btn btn-outline-primary"
+                                   onClick={() => this.Basket(item)}>Заказать</a>
+                            </div>
+                        </div>
+                    </div>
                 ))}
             </div>
 

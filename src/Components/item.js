@@ -1,14 +1,8 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 import {netWorkService} from "../api";
-import { Link, withRouter } from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
+import {addItems} from "../actions/actionCreators";
+import {connect} from "react-redux";
 
 class Item extends React.Component {
     constructor(props) {
@@ -31,63 +25,66 @@ class Item extends React.Component {
             });
     };
 
-    createData(name, item) {
-        return {name, item};
-    }
-
     Basket = () => {
+        console.log(this.state.item)
+        this.props.dispatch(addItems(this.state.item))
         return this.props.history.push(`/cart`)
     }
 
     render() {
-        // console.log(this.state.item.images);
-
-        const rows = [
-            this.createData('Артикул', `${this.state?.item.sku}`),
-            this.createData('Производитель', `${this.state.item.manufacturer}`),
-            this.createData('Цвет', `${this.state.item.color}`),
-            this.createData('Материалы', `${this.state.item.material}`),
-            this.createData('Сезон', `${this.state.item.season}`),
-            this.createData('Повод', `${this.state.item.reason}`)
-        ]
-
         return (
-            <div className={"Item"}>
-                <h1>{this.state.item.title}</h1>
-                <div>
-                    {/*<img src={this.state.item.images[0]}/>*/}
+            <section className="catalog-item">
+                <h2 className="text-center">Босоножки 'MYER'</h2>
+                <div className="row">
+                    <div className="col-5">
+                        {/*<img src={this.state.item.images[0]} className="img-fluid" alt=""></img>*/}
+                    </div>
+                    <div className="col-7">
+                        <table className="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <td>Артикул</td>
+                                <td>{this.state?.item.sku}</td>
+                            </tr>
+                            <tr>
+                                <td>Производитель</td>
+                                <td>{this.state.item.manufacturer}</td>
+                            </tr>
+                            <tr>
+                                <td>Цвет</td>
+                                <td>{this.state.item.color}</td>
+                            </tr>
+                            <tr>
+                                <td>Материалы</td>
+                                <td>{this.state.item.material}</td>
+                            </tr>
+                            <tr>
+                                <td>Сезон</td>
+                                <td>{this.state.item.season}</td>
+                            </tr>
+                            <tr>
+                                <td>Повод</td>
+                                <td>{this.state.item.reason}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div className="text-center">
+                            <p>Размеры в наличии:{this.state.item.sizes?.map(item=> <span
+                                className={`catalog-item-size ${item.avalible ? 'selected' : ""}`}>{item.size} </span>)}
+                            </p>
+                            <p>Количество: <span className="btn-group btn-group-sm pl-2">
+                                                        <button className="btn btn-secondary">-</button>
+                                                        <span className="btn btn-outline-primary">1</span>
+                                                        <button className="btn btn-secondary">+</button>
+                                                    </span>
+                            </p>
+                        </div>
+                        <button className="btn btn-danger btn-block btn-lg" onClick={this.Basket}>В корзину</button>
+                    </div>
                 </div>
-                <div className={"table"}>
-                    <TableContainer component={Paper}>
-                        <Table className={'classes.table'}
-                               aria-label="simple table"
-                               style={{width: '300px', height: '300px',}}>
-                            <TableBody>
-                                {rows.map((row) => (
-                                    <TableRow key={row.name}>
-                                        <TableCell component="th" scope="row">
-                                            {row.name}
-                                        </TableCell>
-                                        <TableCell align="right">{row.item}</TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </div>
-                <div>
-                    <p>Размеры в наличае: {this.state.item.size}</p>
-                </div>
-                <div className={'button'}>
-                    <p>Количество </p>
-                </div>
-                <div>
-                    <button type="button" className="btn btn-danger" onClick={this.Basket} >В корзину</button>
-                </div>
-
-            </div>
+            </section>
         )
     }
 }
 
-export default withRouter(Item);
+export default connect()(withRouter(Item));
