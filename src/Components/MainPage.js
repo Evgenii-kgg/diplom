@@ -26,6 +26,7 @@ class MainPage extends React.Component {
         this.getHits();
         this.onSelectAll();
         this.getCatalogTitle();
+        // this.LoadMore()
     }
 
     getHits = () => {
@@ -41,8 +42,8 @@ class MainPage extends React.Component {
         return this.props.onSelectItem(item)
     }
 
-    onSelectAll = () => {
-        return this.props.onSelectAll()
+    onSelectAll = (item) => {
+        return this.props.onSelectAll(item)
     };
 
     onSelectShoes = (item) => {
@@ -52,11 +53,12 @@ class MainPage extends React.Component {
 
     LoadMore = () => {
         console.log("more")
-        return this.props.onLoadMore(this.props.page)
+        return this.props.onLoadMore( this.props.page + 1,  this.props.currentCategory )
     }
 
     render() {
         console.log(this.props.items)
+        console.log(this.props.page)
         return (
             <div className={"root_list"}>
                 <div className={"add"}>
@@ -78,8 +80,8 @@ class MainPage extends React.Component {
                 <div className={'catalog'} style={{textAlign: 'center'}}>
                     <h1>Каталог</h1>
                     <Category
-                        onSelectAll={() => {
-                            this.onSelectAll()
+                        onSelectAll={(item) => {
+                            this.onSelectAll(item)
                         }}
                         onSelectItem={(item) => {
                             this.onSelectItem(item)
@@ -96,9 +98,9 @@ class MainPage extends React.Component {
                         items={this.props.items}
                     />
                 </div>
-                <div className="text-center">
+                {!this.props.lastPage && <div className="text-center">
                     <button className="btn btn-outline-primary" onClick={this.LoadMore}>Загрузить ещё</button>
-                </div>
+                </div> }
             </div>
         )
     }
@@ -110,4 +112,7 @@ export default withRouter(connect(state=>({
     items: state.app.items,
     all: state.app.all,
     page: state.app.page,
+    offset: state.app.offset,
+    currentCategory: state.app.currentCategory,
+    lastPage: state.app.lastPage,
 }), {onSelectItem, onSelectAll, getCatalogTitle, onLoadMore, getHits})(MainPage));

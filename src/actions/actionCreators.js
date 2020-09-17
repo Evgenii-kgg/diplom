@@ -44,10 +44,13 @@ export function onSearch (query) {
     };
 }
 
-export function onLoadMore (page) {
+export function onLoadMore (page, category) {
     return (dispatch) => {
-        return netWorkService({url: `items?offset=${page}`, method: "GET"}).then(
-            (response)=> dispatch({type: LOAD_MORE, payload: response })
+        return netWorkService({url: `items?categoryId=${category}&offset=${page}`, method: "GET"}).then(
+            (response)=> {
+                console.log(response)
+                dispatch({type: LOAD_MORE, payload: {data: response , page: page} })
+            }
         )
     };
 }
@@ -63,15 +66,15 @@ export function getCatalogTitle () {
 export function onSelectItem (query) {
     return (dispatch) => {
         return netWorkService({url: `items?categoryId=${query}`, method: "GET"}).then(
-            (response)=> dispatch({type: SELECT_ITEM, payload: response })
+            (response)=> dispatch({type: SELECT_ITEM, payload: {data: response, currentCategory: query } })
         )
     };
 }
 
-export function onSelectAll () {
+export function onSelectAll (query) {
     return (dispatch) => {
         return netWorkService({url: `items`, method: "GET"}).then(
-            (response)=> dispatch({type: SELECT_ALL, payload: response })
+            (response)=> dispatch({type: SELECT_ALL, payload: {data: response, currentCategory: query} })
         )
     };
 }

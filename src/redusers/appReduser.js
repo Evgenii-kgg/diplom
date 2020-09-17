@@ -17,6 +17,8 @@ const initialState = {
     items: [],
     categories: [],
     top: [],
+    currentCategory: "1",
+    lastPage: false,
 };
 
 export default function appReducer(state = initialState, action) {
@@ -27,18 +29,17 @@ export default function appReducer(state = initialState, action) {
             return ({...state, searchGlobal: action.payload})
         case SEARCH_COLLECTION:
             return ({...state, searchCollection: action.payload})
-        case LOAD_MORE:
-            return ({...state, page: action.payload})
         case CATALOG_TITLE:
             return ({...state, categories: action.payload})
         case SELECT_ITEM:
-            console.log(state.items)
-            return ({...state, items: action.payload})
+            return ({...state, items: action.payload.data, currentCategory: action.payload.currentCategory, lastPage: false , page: 1})
         case GET_HITS:
             return ({...state, top: action.payload})
         case SELECT_ALL:
-            console.log(state.items)
-            return ({...state, items: action.payload})
+            return ({...state, items: action.payload.data, currentCategory: action.payload.currentCategory, lastPage: false , page: 1})
+        case LOAD_MORE:
+            console.log(action.payload, state.items )
+                return ({...state, items: [...state.items, ...action.payload.data], page: action.payload.page, lastPage: (action.payload.data.length < 6) })
         default:
             return state;
     }

@@ -52,11 +52,8 @@ class Catalog extends React.Component {
     }
 
     LoadMore = () => {
-        return netWorkService({url: `items?offset=${this.state.offset}`, method: "GET"})
-            .then((response) => {
-                console.log("еще", response)
-                //this.setState( items: {...items, response})
-            })
+        console.log("more")
+        return this.props.onLoadMore( this.props.page + 1,  this.props.currentCategory )
     }
 
     render() {
@@ -118,7 +115,10 @@ export default withRouter(connect(state => ({
     searchGlobal: state.app.searchGlobal,
     categories: state.app.categories,
     items: state.app.items,
-    all: state.app.all
+    all: state.app.all,
+    page: state.app.page,
+    offset: state.app.offset,
+    currentCategory: state.app.currentCategory
 }), {onSearch, changeSearchGlobal, onSelectItem, onSelectAll, getCatalogTitle, onLoadMore})(Catalog));
 
 
