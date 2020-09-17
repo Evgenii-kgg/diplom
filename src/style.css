@@ -450,6 +450,8 @@ section {
     border-radius: 15px;
     border-width: 1px;
     color: #fff;
+    text-decoration: line-through;
+
 }
 
 .catalog-search-form {

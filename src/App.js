@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 import {BrowserRouter as Router, Route, Switch,} from 'react-router-dom';
@@ -7,10 +6,10 @@ import {BrowserRouter as Router, Route, Switch,} from 'react-router-dom';
 import Header from "./Page/Header";
 import Footer from "./Page/Footer";
 import Catalog from "./Components/Catalog";
-import About from "./Components/About";
-import Contacts from "./Components/Contacts";
+import About from "./Page/About";
+import Contacts from "./Page/Contacts";
 import MainPage from "./Components/MainPage";
-import NotFound from "./Components/NotFound";
+import NotFound from "./Page/NotFound";
 import Item from "./Components/item";
 import Basket from "./Components/Basket";
 
@@ -26,7 +25,6 @@ function App() {
                     <Switch>
                         <Route path="/" exact component={MainPage}/>
                         <Route path='/catalog' exact component={Catalog}/>
-                        {/*<Route path='/catalog/:search' exact component={Catalog}/>*/}
                         <Route path="/catalog/:id" component={Item}/>
                         <Route path="/about" component={About}/>
                         <Route path="/cart" component={Basket}/>

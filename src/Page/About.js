@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import banner from '../img/banner.jpg'
 
 
 function About() {
@@ -9,7 +9,7 @@ function About() {
                 <div className="row">
                     <div className="col">
                         <div className="banner">
-                            <img src="/img/banner.jpg" className="img-fluid" alt="К весне готовы!"></img>
+                            <img src={banner} className="img-fluid" alt="К весне готовы!"></img>
                                 <h2 className="banner-header">К весне готовы!</h2>
                         </div>
 

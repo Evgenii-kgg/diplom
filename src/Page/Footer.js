@@ -1,5 +1,6 @@
 import React from "react";
-import {NavLink} from "react-router-dom";
+
+// import {NavLink} from "react-router-dom";
 
 
 function Footer() {
@@ -30,8 +31,10 @@ function Footer() {
                             </div>
                         </section>
                         <section>
-                            {/*<div class="footer-copyright">2009-2019 © BosaNoga.ru — модный интернет-магазин обуви и аксессуаров.*/}
-                            {/*    Все права защищены.<br>Доставка по всей России!</div>*/}
+                            <div className="footer-copyright">2009-2019 © BosaNoga.ru — модный интернет-магазин обуви и
+                                аксессуаров.
+                                Все права защищены.<br/>Доставка по всей России!
+                            </div>
                         </section>
                     </div>
                     <div className="col text-right">

@@ -1,6 +1,6 @@
 import React from 'react';
 import {netWorkService} from "../api";
-import {Link, withRouter} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import {addItems} from "../actions/actionCreators";
 import {connect} from "react-redux";
 
@@ -9,7 +9,9 @@ class Item extends React.Component {
         super(props);
         this.state = {
             loader: false,
-            item: {}
+            item: {},
+            count: 1,
+            size: '',
         }
     };
 
@@ -25,19 +27,27 @@ class Item extends React.Component {
             });
     };
 
-    Basket = () => {
+    increment = () => {
+        this.setState({ count: this.state.count + 1})
+    };
+
+    decrement = () =>  {
+        this.setState({ count: this.state.count - 1})
+    };
+
+    Basket = (item) => {
         console.log(this.state.item)
-        this.props.dispatch(addItems(this.state.item))
+        this.props.dispatch(addItems({...this.state.item, count: this.state.count, size: this.state.size}))
         return this.props.history.push(`/cart`)
     }
 
     render() {
         return (
             <section className="catalog-item">
-                <h2 className="text-center">Босоножки 'MYER'</h2>
+                <h2 className="text-center">{this.state?.item.title}</h2>
                 <div className="row">
                     <div className="col-5">
-                        {/*<img src={this.state.item.images[0]} className="img-fluid" alt=""></img>*/}
+                        {/*{this.state.item.images.find(item => item[0])}*/}
                     </div>
                     <div className="col-7">
                         <table className="table table-bordered">
@@ -69,17 +79,27 @@ class Item extends React.Component {
                             </tbody>
                         </table>
                         <div className="text-center">
-                            <p>Размеры в наличии:{this.state.item.sizes?.map(item=> <span
-                                className={`catalog-item-size ${item.avalible ? 'selected' : ""}`}>{item.size} </span>)}
+                            <p>Размеры в наличии:{this.state.item.sizes?.map((item, key) => {
+                                return (<span
+                                    key={key}
+                                    onClick={()=> {
+                                        console.log('size', item.size)
+                                        this.setState({size: item.size})
+                                        //return (className={{}})
+                                    }}
+                                    className={`catalog-item-size ${item.avalible ? 'selected' : ""}`}>{item.size} </span>
+                            )})}
                             </p>
                             <p>Количество: <span className="btn-group btn-group-sm pl-2">
-                                                        <button className="btn btn-secondary">-</button>
-                                                        <span className="btn btn-outline-primary">1</span>
-                                                        <button className="btn btn-secondary">+</button>
+                                                        <button className="btn btn-secondary"
+                                                                onClick={this.decrement}>-</button>
+                                                        <span className="btn btn-outline-primary">{this.state.count}</span>
+                                                        <button className="btn btn-secondary"
+                                                                onClick={this.increment}>+</button>
                                                     </span>
                             </p>
                         </div>
-                        <button className="btn btn-danger btn-block btn-lg" onClick={this.Basket}>В корзину</button>
+                        <button className="btn btn-danger btn-block btn-lg" disabled={!this.state.size} onClick={this.Basket}>В корзину</button>
                     </div>
                 </div>
             </section>
@@ -87,4 +107,8 @@ class Item extends React.Component {
     }
 }
 
-export default connect()(withRouter(Item));
+export default connect(state => ({
+    items: state.basket.items,
+    size: state.basket.size
+}))(withRouter(Item));
+

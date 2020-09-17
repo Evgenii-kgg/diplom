@@ -5,4 +5,16 @@ export const CHANGE_PHONE = 'CHANGE_PHONE'
 export const DELETE_ITEMS = 'DELETE_ITEMS'
 export const CHANGE_SEARCH = 'CHANGE_SEARCH'
 export const CHANGE_SEARCH_GLOBAL = 'CHANGE_SEARCH_GLOBAL'
+export const SEARCH_COLLECTION = 'SEARCH_COLLECTION'
+export const LOAD_MORE = 'LOAD_MORE'
+export const CATALOG_TITLE = 'CATALOG_TITLE'
+export const SELECT_ITEM = 'SELECT_ITEM'
+export const SELECT_ALL = 'SELECT_ALL'
+export const GET_HITS = 'GET_HITS'
+// export const SELECT_SIZE = 'SELECT_SIZE'
+// export const INCREMENT_SIZE = 'INCREMENT_SIZE'
+// export const DECREMENT_SIZE = 'DECREMENT_SIZE'
+
+
+
 

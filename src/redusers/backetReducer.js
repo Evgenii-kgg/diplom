@@ -1,6 +1,5 @@
 import {CHANGE_PHONE, CHANGE_ADDRESS, ADD_ITEMS, DELETE_ITEMS} from "../actions/actionTypes";
 import storage from '../service/storage'
-import item from "../Components/item";
 
 
 const initialState = {
@@ -17,16 +16,17 @@ export default function basketAddReducer(state = initialState, action) {
         case CHANGE_ADDRESS:
             return ({...state, address: action.payload})
         case ADD_ITEMS: {
-             const allPrice = state.items.find()
-            const simular = state.items.find(item => item.id == action.payload.id )
-            if(simular) {
-                storage.set("basket", { items: [...state.items.filter(item=> item.id !== simular.id), {...simular, count: !!simular.count ? simular.count+1 : 1}]})
-                return ({...state, items: [...state.items.filter(item=> item.id !== simular.id), {...simular, count: !!simular.count ? simular.count+1 : 1}]})
+            const similar = state.items.find(item => (item.id === action.payload.id && item.size === action.payload.size))
+            if(similar && similar.size === action.payload.size) {
+                const count = !!similar.count ? similar.count+action.payload.count  : action.payload.count
+                storage.set("basket", { items: [...state.items.filter(item=> item.id !== similar.id ), {...similar, count}]})
+                return ({...state, items: [...state.items.filter(item=> item.id !== similar.id && item.size !== action.payload.size), {...similar, count}]})
             }
-            storage.set("basket", { items: [...state.items, {...action.payload, count: 1 }], })
-            return ({...state, items: [...state.items, {...action.payload, count: 1 }]})
+            storage.set("basket", { items: [...state.items, action.payload ]})
+            return ({...state, items: [...state.items, action.payload ]})
         }
         case DELETE_ITEMS:
+            storage.set("basket", {items: state.items.filter(item => item.id !== action.payload)})
             return ({...state, items: state.items.filter(item => item.id !== action.payload)})
         default:
             return state;

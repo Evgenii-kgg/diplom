@@ -1,12 +1,12 @@
 import React from "react";
-import {useSelector, useDispatch, connect} from "react-redux";
+import { useDispatch, connect} from "react-redux";
 import {netWorkService} from "../api";
-import {changePhone, changeAddress, addItems, deleteItems} from "../actions/actionCreators";
+import {changePhone, changeAddress, deleteItems} from "../actions/actionCreators";
 
 
 function Basket(props) {
 
-    const item = useSelector((state) => state.basket);
+    //const item = useSelector((state) => state.basket);
     const dispatch = useDispatch();
 
     const Order = () => {
@@ -25,7 +25,7 @@ function Basket(props) {
         dispatch(deleteItems(id))
     }
 
-    console.log(props)
+    //console.log(props)
     return (
         <div>
             <div>
@@ -44,12 +44,12 @@ function Basket(props) {
                         </tr>
                         </thead>
                         <tbody>
-                        {props.items?.map(item => {
+                        {props.items?.map((item, key) => {
                             return (
-                                <tr>
+                                <tr key={key}>
                                 <th scope="row">1</th>
-                                <td><a href="/products/1.html">{item.title}</a></td>
-                                <td>18 US</td>
+                                <td>{item.title}</td>
+                                <td>{item.size}</td>
                                 <td>{item.count}</td>
                                 <td>{item.price} руб.</td>
                                 <td>{item.price * item.count}</td>
@@ -75,18 +75,30 @@ function Basket(props) {
                         <form className={"card-body"}>
                             <div className={"form-group"}>
                                 <label htmlFor="phone">Телефон</label>
-                                <input className={"form-control"} id="phone" placeholder="Ваш телефон"
-                                       onChange={event => dispatch(changePhone(event.target.value))} name={"phone"}
-                                       value={props.phone}></input>
+                                <input
+                                    className={"form-control"}
+                                    id="phone"
+                                    placeholder="Ваш телефон"
+                                    onChange={event => dispatch(changePhone(event.target.value))} name={"phone"}
+                                    value={props.phone}>
+                                </input>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="address">Адрес доставки</label>
-                                <input className="form-control" id="address" placeholder="Адрес доставки"
-                                       onChange={event => dispatch(changeAddress(event.target.value))} name={"address"}
-                                       value={props.address}></input>
+                                <input
+                                    className="form-control"
+                                    id="address"
+                                    placeholder="Адрес доставки"
+                                    onChange={event => dispatch(changeAddress(event.target.value))} name={"address"}
+                                    value={props.address}>
+                                </input>
                             </div>
                             <div className="form-group form-check">
-                                <input type="checkbox" className="form-check-input" id="agreement"></input>
+                                <input
+                                    type="checkbox"
+                                    className="form-check-input"
+                                    id="agreement">
+                                </input>
                                 <label className="form-check-label" htmlFor="agreement">Согласен с правилами
                                     доставки</label>
                             </div>

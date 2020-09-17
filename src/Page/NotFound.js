@@ -1,15 +1,16 @@
 import React from "react";
-import "../App.css";
+//import * as style from '../style.css'
 
-function Page404() {
-
+function NotFound(props) {
+    console.log(props)
+    // const items = props.items
     return <div>
         <main className="container">
             <div className="row">
                 <div className="col">
                     <div className="banner">
                         <img src="/img/banner.jpg" className="img-fluid" alt="К весне готовы!"></img>
-                            <h2 className="banner-header">К весне готовы!</h2>
+                        <h2 className="banner-header">К весне готовы!</h2>
                     </div>
 
                     <section className="top-sales">
@@ -21,7 +22,7 @@ function Page404() {
                 </div>
             </div>
         </main>
-        </div>
+    </div>
 }
 
-export default Page404;
+export default NotFound;
