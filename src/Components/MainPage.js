@@ -4,33 +4,24 @@ import Category from "./Category";
 import List from "./List";
 import {connect} from "react-redux";
 import {
-    getCatalogTitle, getHits,
+    getCatalogTitle, getTop,
     onLoadMore,
-    onSelectAll,
     onSelectItem
 } from "../actions/actionCreators";
 
 
 class MainPage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            loader: false,
-            top: [],
-            categories: [],
-            items: [],
-        }
-    }
+
 
     componentDidMount() {
         this.getHits();
-        this.onSelectAll();
+        this.onSelectItem(false)
         this.getCatalogTitle();
         // this.LoadMore()
     }
 
     getHits = () => {
-        return this.props.getHits()
+        return this.props.getTop()
     };
 
     getCatalogTitle = () => {
@@ -42,9 +33,6 @@ class MainPage extends React.Component {
         return this.props.onSelectItem(item)
     }
 
-    onSelectAll = (item) => {
-        return this.props.onSelectAll(item)
-    };
 
     onSelectShoes = (item) => {
         console.log("push", item)
@@ -58,7 +46,7 @@ class MainPage extends React.Component {
 
     render() {
         console.log(this.props.items)
-        console.log(this.props.page)
+        console.log(this.props.catalog)
         return (
             <div className={"root_list"}>
                 <div className={"add"}>
@@ -71,17 +59,17 @@ class MainPage extends React.Component {
                     <h1>Хиты продаж</h1>
                 </div>
                 <div className={"hits"}>
-                    <List
+                    {this.props.loaded? "loading" : <List
                         onSelectItem={(item) => {
                             this.onSelectShoes(item)
                         }}
-                        items={this.props.top}/>
+                        items={this.props.top}/>}
                 </div>
                 <div className={'catalog'} style={{textAlign: 'center'}}>
                     <h1>Каталог</h1>
                     <Category
                         onSelectAll={(item) => {
-                            this.onSelectAll(item)
+                            this.onSelectItem()
                         }}
                         onSelectItem={(item) => {
                             this.onSelectItem(item)
@@ -90,13 +78,13 @@ class MainPage extends React.Component {
                     />
                 </div>
                 <div className={'catalog-list'}>
-                    <List
+                    { this.props.loadedCategory ?  'loaded' : <List
                         className="row"
                         onSelectItem={(item) => {
                             this.onSelectShoes(item)
                         }}
                         items={this.props.items}
-                    />
+                    />}
                 </div>
                 {!this.props.lastPage && <div className="text-center">
                     <button className="btn btn-outline-primary" onClick={this.LoadMore}>Загрузить ещё</button>
@@ -108,11 +96,14 @@ class MainPage extends React.Component {
 
 export default withRouter(connect(state=>({
     categories: state.app.categories,
-    top: state.app.top,
-    items: state.app.items,
-    all: state.app.all,
-    page: state.app.page,
-    offset: state.app.offset,
-    currentCategory: state.app.currentCategory,
-    lastPage: state.app.lastPage,
-}), {onSelectItem, onSelectAll, getCatalogTitle, onLoadMore, getHits})(MainPage));
+    // top: state.app.top,
+    items: state.catalog.data,
+    page: state.catalog.page,
+    loadedCategory: state.catalog.loaded,
+    // offset: state.catalog.offset,
+    // currentCategory: state.app.currentCategory,
+    lastPage: state.catalog.lastPage,
+    // loadingHit: state.app.loadingHit,
+    top: state.top.data,
+    loaded: state.top.loaded,
+}), {onSelectItem, getCatalogTitle, onLoadMore, getTop})(MainPage));

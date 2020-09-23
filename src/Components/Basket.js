@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, connect} from "react-redux";
+import {useDispatch, connect} from "react-redux";
 import {netWorkService} from "../api";
 import {changePhone, changeAddress, deleteItems} from "../actions/actionCreators";
 
@@ -47,22 +47,23 @@ function Basket(props) {
                         {props.items?.map((item, key) => {
                             return (
                                 <tr key={key}>
-                                <th scope="row">1</th>
-                                <td>{item.title}</td>
-                                <td>{item.size}</td>
-                                <td>{item.count}</td>
-                                <td>{item.price} руб.</td>
-                                <td>{item.price * item.count}</td>
-                                <td>
-                                    <button className="btn btn-outline-danger btn-sm" onClick={()=> deleteItem(item.id)}>Удалить
-                                    </button>
-                                </td>
-                            </tr>
+                                    <th scope="row">1</th>
+                                    <td>{item.title}</td>
+                                    <td>{item.size}</td>
+                                    <td>{item.count}</td>
+                                    <td>{item.price} руб.</td>
+                                    <td>{item.price * item.count}</td>
+                                    <td>
+                                        <button className="btn btn-outline-danger btn-sm"
+                                                onClick={() => deleteItem(item.id)}>Удалить
+                                        </button>
+                                    </td>
+                                </tr>
                             )
                         })}
                         <tr>
                             <td colSpan="5" className="text-right">Общая стоимость</td>
-                            <td>{props.items.map(item=> item.price * item.count).reduce((a,b)=> a+b)}</td>
+                            <td>{props.items.map(item => item.price * item.count).reduce((a, b) => a + b)}</td>
                         </tr>
                         </tbody>
                     </table>

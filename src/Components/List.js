@@ -13,7 +13,7 @@ class List extends React.Component {
     render() {
         console.log(this.props)
         return (
-            <div className={"hits-list"} style={{columnCount: 3, }}>
+            <div className={"hits-list"} style={{columnCount: 3, display: 'flex' }}>
                 {this.props.items.map((item, key) => (
                     <div className="col-4" key={key}>
                         <div className="card catalog-item-card">

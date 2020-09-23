@@ -10,7 +10,6 @@ import {
     getCatalogTitle,
     onLoadMore,
     onSearch,
-    onSelectAll,
     onSelectItem
 } from "../actions/actionCreators";
 import {connect} from "react-redux";
@@ -20,16 +19,13 @@ class Catalog extends React.Component {
         super(props);
         this.state = {
             loader: false,
-            // top: [],
-            // categories: [],
-            // items: [],
         }
         console.log(props.match)
     };
 
     componentDidMount() {
         this.getCatalogTitle();
-        this.onSelectAll()
+        this.onSelectItem(false)
         this.props.onSearch(this.props.searchGlobal)
     };
 
@@ -42,9 +38,6 @@ class Catalog extends React.Component {
         return this.props.onSelectItem(item)
     }
 
-    onSelectAll = () => {
-        return this.props.onSelectAll()
-    };
 
     onSelectShoes = (item) => {
         console.log("push", item)
@@ -57,7 +50,7 @@ class Catalog extends React.Component {
     }
 
     render() {
-        console.log(this.props.searchGlobal)
+        console.log(this.props)
         // console.log(this.props.match.params)
         return (
             <div className={"catalog_page"}>
@@ -85,7 +78,7 @@ class Catalog extends React.Component {
                     <div className={'catalog_list'} style={{textAlign: 'center'}}>
                         <Category
                             onSelectAll={() => {
-                                this.onSelectAll()
+                                this.onSelectItem()
                             }}
                             onSelectItem={(item) => {
                                 this.onSelectItem(item)
@@ -94,12 +87,13 @@ class Catalog extends React.Component {
                         />
                     </div>
                     <div className={'list'}>
-                        <List
+                        { this.props.loadedCategory ?  'loaded' : <List
+                            className="row"
                             onSelectItem={(item) => {
                                 this.onSelectShoes(item)
                             }}
                             items={this.props.items}
-                        />
+                        />}
                     </div>
                 </section>
                 <div className="text-center">
@@ -110,15 +104,12 @@ class Catalog extends React.Component {
     }
 }
 
+
 export default withRouter(connect(state => ({
-    searchItem: state.app.searchCollection,
-    searchGlobal: state.app.searchGlobal,
     categories: state.app.categories,
-    items: state.app.items,
-    all: state.app.all,
-    page: state.app.page,
-    offset: state.app.offset,
-    currentCategory: state.app.currentCategory
-}), {onSearch, changeSearchGlobal, onSelectItem, onSelectAll, getCatalogTitle, onLoadMore})(Catalog));
-
-
+    items: state.search.data,
+    page: state.search.page,
+    loadedCategory: state.search.loaded,
+    lastPage: state.search.lastPage,
+    searchGlobal: state.search.searchGlobal
+}), {onSearch, changeSearchGlobal, onSelectItem, getCatalogTitle, onLoadMore})(Catalog));
