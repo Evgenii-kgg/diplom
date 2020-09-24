@@ -11,6 +11,7 @@ export const CATALOG_TITLE = 'CATALOG_TITLE'
 export const SELECT_ITEM = 'SELECT_ITEM'
 export const SELECT_ALL = 'SELECT_ALL'
 export const GET_HITS = 'GET_HITS'
+export const CLEAR_ITEMS = 'CLEAR_ITEMS'
 
 export const CATALOG_REQUEST = 'CATALOG_REQUEST'
 export const CATALOG_SUCCESS = 'CATALOG_SUCCESS'

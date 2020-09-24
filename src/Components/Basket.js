@@ -1,7 +1,8 @@
 import React from "react";
 import {useDispatch, connect} from "react-redux";
 import {netWorkService} from "../api";
-import {changePhone, changeAddress, deleteItems} from "../actions/actionCreators";
+import {changePhone, changeAddress, deleteItems, clearItems} from "../actions/actionCreators";
+// import storage from "../service/storage";
 
 
 function Basket(props) {
@@ -11,13 +12,16 @@ function Basket(props) {
 
     const Order = () => {
         return netWorkService({
-            url: "categories", method: "POST", body: {
-                owner: {phone: props.phone, address: props.address, item: props.items}
+            url: "order", method: "POST", body: {
+                'owner': {'phone': props.phone, 'address': props.address}, 'item': props.items
             }
         })
             .then((response) => {
                 console.log("ответ", response);
-                // this.setState({categories: response, loader: true});
+                window.localStorage.removeItem('basket');
+                dispatch(clearItems)
+                alert('Спасибо за заказ')
+                props.history.push(`/`)
             });
     }
 
@@ -63,7 +67,7 @@ function Basket(props) {
                         })}
                         <tr>
                             <td colSpan="5" className="text-right">Общая стоимость</td>
-                            <td>{props.items.map(item => item.price * item.count).reduce((a, b) => a + b)}</td>
+                            <td>{!!props.items.length ? props.items.map(item => item.price * item.count).reduce((a, b) => a + b) : ''}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -104,7 +108,10 @@ function Basket(props) {
                                     доставки</label>
                             </div>
                             <button type="submit" className="btn btn-outline-secondary"
-                                    onClick={Order}>Оформить
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        Order()
+                                    }}>Оформить
                             </button>
                         </form>
 

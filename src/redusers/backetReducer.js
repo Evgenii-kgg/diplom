@@ -1,4 +1,4 @@
-import {CHANGE_PHONE, CHANGE_ADDRESS, ADD_ITEMS, DELETE_ITEMS} from "../actions/actionTypes";
+import {CHANGE_PHONE, CHANGE_ADDRESS, ADD_ITEMS, DELETE_ITEMS, CLEAR_ITEMS} from "../actions/actionTypes";
 import storage from '../service/storage'
 
 
@@ -28,6 +28,8 @@ export default function basketAddReducer(state = initialState, action) {
         case DELETE_ITEMS:
             storage.set("basket", {items: state.items.filter(item => item.id !== action.payload)})
             return ({...state, items: state.items.filter(item => item.id !== action.payload)})
+        case CLEAR_ITEMS:
+            return  ({...state, items: []})
         default:
             return state;
     }

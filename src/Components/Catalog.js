@@ -1,6 +1,5 @@
 import React from "react";
 
-import {netWorkService} from "../api";
 import {withRouter} from "react-router-dom";
 
 import Category from "./Category";
@@ -13,6 +12,9 @@ import {
     onSelectItem
 } from "../actions/actionCreators";
 import {connect} from "react-redux";
+import Loader from 'react-loader-spinner'
+import banner from '../img/banner.jpg'
+
 
 class Catalog extends React.Component {
     constructor(props) {
@@ -46,7 +48,7 @@ class Catalog extends React.Component {
 
     LoadMore = () => {
         console.log("more")
-        return this.props.onLoadMore( this.props.page + 1,  this.props.currentCategory )
+        return this.props.onLoadMore(this.props.page + 1, this.props.currentCategory)
     }
 
     render() {
@@ -55,7 +57,7 @@ class Catalog extends React.Component {
         return (
             <div className={"catalog_page"}>
                 <div className={"add"}>
-                    <img src="https://github.com/netology-code/ra16-diploma/blob/master/html/img/banner.jpg?raw=true"
+                    <img src={banner}
                          alt={''}
                          style={{width: '100%'}}/>
                 </div>
@@ -87,7 +89,13 @@ class Catalog extends React.Component {
                         />
                     </div>
                     <div className={'list'}>
-                        { this.props.loadedCategory ?  'loaded' : <List
+                        {this.props.loadedCategory ? <Loader
+                            type="Oval"
+                            color="#00BFFF"
+                            height={50}
+                            width={50}
+
+                        /> : <List
                             className="row"
                             onSelectItem={(item) => {
                                 this.onSelectShoes(item)
@@ -96,9 +104,9 @@ class Catalog extends React.Component {
                         />}
                     </div>
                 </section>
-                <div className="text-center">
+                {!this.props.lastPage && <div className="text-center">
                     <button className="btn btn-outline-primary" onClick={this.LoadMore}>Загрузить ещё</button>
-                </div>
+                </div>}
             </div>
         )
     }

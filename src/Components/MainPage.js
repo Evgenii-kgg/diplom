@@ -8,7 +8,8 @@ import {
     onLoadMore,
     onSelectItem
 } from "../actions/actionCreators";
-
+import Loader from 'react-loader-spinner'
+import banner from '../img/banner.jpg'
 
 class MainPage extends React.Component {
 
@@ -41,7 +42,7 @@ class MainPage extends React.Component {
 
     LoadMore = () => {
         console.log("more")
-        return this.props.onLoadMore( this.props.page + 1,  this.props.currentCategory )
+        return this.props.onLoadMore(this.props.page + 1, this.props.currentCategory)
     }
 
     render() {
@@ -50,7 +51,7 @@ class MainPage extends React.Component {
         return (
             <div className={"root_list"}>
                 <div className={"add"}>
-                    <img src="https://github.com/netology-code/ra16-diploma/blob/master/html/img/banner.jpg?raw=true"
+                    <img src={banner}
                          alt={''}
                          style={{width: '100%'}}>
                     </img>
@@ -59,7 +60,13 @@ class MainPage extends React.Component {
                     <h1>Хиты продаж</h1>
                 </div>
                 <div className={"hits"}>
-                    {this.props.loaded? "loading" : <List
+                    {this.props.loaded ? <Loader
+                        type="Oval"
+                        color="#00BFFF"
+                        height={50}
+                        width={50}
+
+                    /> : <List
                         onSelectItem={(item) => {
                             this.onSelectShoes(item)
                         }}
@@ -78,7 +85,12 @@ class MainPage extends React.Component {
                     />
                 </div>
                 <div className={'catalog-list'}>
-                    { this.props.loadedCategory ?  'loaded' : <List
+                    {this.props.loadedCategory ? <Loader
+                        type="Oval"
+                        color="#00BFFF"
+                        height={50}
+                        width={50}
+                    /> : <List
                         className="row"
                         onSelectItem={(item) => {
                             this.onSelectShoes(item)
@@ -88,13 +100,13 @@ class MainPage extends React.Component {
                 </div>
                 {!this.props.lastPage && <div className="text-center">
                     <button className="btn btn-outline-primary" onClick={this.LoadMore}>Загрузить ещё</button>
-                </div> }
+                </div>}
             </div>
         )
     }
 }
 
-export default withRouter(connect(state=>({
+export default withRouter(connect(state => ({
     categories: state.app.categories,
     // top: state.app.top,
     items: state.catalog.data,

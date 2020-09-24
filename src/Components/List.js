@@ -27,10 +27,10 @@ class List extends React.Component {
                                 <p className="card-text">{item.title}</p>
                                 <p className="card-text">{item.price} руб.</p>
                                 </div>
-                                <a className="btn btn-outline-primary"
+                                <div className="btn btn-outline-primary"
                                    onClick={() => this.props.onSelectItem(item.id)}>
                                     Заказать
-                                </a>
+                                </div>
                             </div>
                         </div>
                     </div>

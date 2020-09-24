@@ -11,5 +11,6 @@ export const netWorkService = ({ url, method, body }) => {
             "Content-Type": "text/plain",
         },
         body: name,
-    }).then((res) => res.json());
+    }).then((res) => res.json()).catch(console.log)
+    ;
 };

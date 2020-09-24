@@ -4,23 +4,19 @@ import {
     ADD_ITEMS,
     DELETE_ITEMS,
     CHANGE_SEARCH,
-    CHANGE_SEARCH_GLOBAL,
-    SEARCH_COLLECTION,
     LOAD_MORE,
-    SELECT_ITEM,
-    SELECT_ALL,
     CATALOG_TITLE,
-    // GET_HITS,
     SEARCH_REQUEST,
-    // CATALOG_REQUEST,
     TOP_REQUEST,
     TOP_SUCCESS,
-    CATEGORY_ALL_REQUEST,
-    CATEGORY_REQUEST,
     CATALOG_REQUEST,
-    GET_HITS,
     CATALOG_SUCCESS,
-    CATEGORY_SUCCESS, CATALOG_CHANGE_EXTRA, CATALOG_CLEAR, SEARCH_SUCCESS, SEARCH_CHANGE_EXTRA, SEARCH_CLEAR,
+    CATALOG_CHANGE_EXTRA,
+    CATALOG_CLEAR,
+    SEARCH_SUCCESS,
+    SEARCH_CHANGE_EXTRA,
+    SEARCH_CLEAR,
+    CLEAR_ITEMS,
 } from "./actionTypes";
 import {netWorkService} from "../api";
 
@@ -37,6 +33,10 @@ export function changeAddress( address) {
 
 export function addItems(item) {
     return {type: ADD_ITEMS, payload: item };
+}
+
+export function clearItems() {
+    return {type: CLEAR_ITEMS };
 }
 
 export function deleteItems(id) {
@@ -65,7 +65,6 @@ export function onLoadMore (page, category) {
     return (dispatch) => {
         return netWorkService({url: `items?categoryId=${category}&offset=${page}`, method: "GET"}).then(
             (response)=> {
-                console.log(response)
                 dispatch({type: LOAD_MORE, payload: {data: response , page: page} })
             }
         )
@@ -90,15 +89,6 @@ export function onSelectItem (query) {
         )
     };
 }
-
-// export function onSelectAll (query) {
-//     return (dispatch) => {
-//         dispatch({type: CATEGORY_REQUEST, payload: true })
-//         return netWorkService({url: `items`, method: "GET"}).then(
-//             (response)=> dispatch({type: CATEGORY_SUCCESS, payload: {data: response, currentCategory: query} })
-//         )
-//     };
-// }
 
 export function getTop () {
     return (dispatch) => {

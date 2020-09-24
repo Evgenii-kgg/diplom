@@ -11,12 +11,16 @@ export default function createCollection({name, enhancer, extraState = {}}) {
         }
         if (type === `${name}_SUCCESS`) {
             const page = action.payload.page ? action.payload.page : 1
-            const lastPage = (action.payload.data.length < 6)
-            return {
-                ...state,
-                loaded: false,
-                data: [...state.data, ...action.payload.data], page: page, lastPage: lastPage
+            const lastPage = (action.payload.data && action.payload.data.length < 6)
+            if(action.payload.data) {
+                console.log(action.payload.data)
+                return {
+                    ...state,
+                    loaded: false,
+                    data: [...state.data, ...action.payload.data], page: page, lastPage: lastPage
+                }
             }
+
         }
         if (type === `${name}_FAILURE`) {
             return {
