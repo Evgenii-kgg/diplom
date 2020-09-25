@@ -445,6 +445,14 @@ section {
     padding: 0 10px;
 }
 
+.catalog-item-size:hover {
+    background: #ff748b;
+}
+
+.selected {
+color: #ff8076;
+}
+
 .catalog-item-size.selected {
     background: #727e86;
     border-radius: 15px;
@@ -566,4 +574,8 @@ h2, .h2 {
 .btn-outline-primary:hover {
     background-color: #727e86;
     border-color: #727e86;
+}
+
+.selected:focus {
+    background: #ff0000;
 }

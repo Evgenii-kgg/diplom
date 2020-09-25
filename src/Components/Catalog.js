@@ -7,10 +7,10 @@ import List from "./List";
 import {
     changeSearchGlobal,
     getCatalogTitle,
-    onLoadMore,
+    onLoadMoreCatalog,
     onSearch,
-    onSelectItem
-} from "../actions/actionCreators";
+    onSelectItemCatalog
+} from "../redux/actions/actionCreators";
 import {connect} from "react-redux";
 import Loader from 'react-loader-spinner'
 import banner from '../img/banner.jpg'
@@ -37,7 +37,7 @@ class Catalog extends React.Component {
 
     onSelectItem = (item) => {
         console.log("push", item)
-        return this.props.onSelectItem(item)
+        return this.props.onSelectItemCatalog(item)
     }
 
 
@@ -46,9 +46,8 @@ class Catalog extends React.Component {
         return this.props.history.push(`/catalog/${item}`)
     }
 
-    LoadMore = () => {
-        console.log("more")
-        return this.props.onLoadMore(this.props.page + 1, this.props.currentCategory)
+    onLoadMoreCatalog = () => {
+        return this.props.onLoadMoreCatalog(this.props.page + 1, this.props.currentCategory)
     }
 
     render() {
@@ -105,7 +104,7 @@ class Catalog extends React.Component {
                     </div>
                 </section>
                 {!this.props.lastPage && <div className="text-center">
-                    <button className="btn btn-outline-primary" onClick={this.LoadMore}>Загрузить ещё</button>
+                    <button className="btn btn-outline-primary" onClick={this.onLoadMoreCatalog}>Загрузить ещё</button>
                 </div>}
             </div>
         )
@@ -119,5 +118,6 @@ export default withRouter(connect(state => ({
     page: state.search.page,
     loadedCategory: state.search.loaded,
     lastPage: state.search.lastPage,
-    searchGlobal: state.search.searchGlobal
-}), {onSearch, changeSearchGlobal, onSelectItem, getCatalogTitle, onLoadMore})(Catalog));
+    searchGlobal: state.search.searchGlobal,
+    currentCategory: state.search.currentCategory,
+}), {onSearch, changeSearchGlobal, onSelectItemCatalog, getCatalogTitle, onLoadMoreCatalog})(Catalog));

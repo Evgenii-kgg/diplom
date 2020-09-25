@@ -3,46 +3,29 @@ import header_logo from '../img/header-logo.png'
 import SearchIcon from '@material-ui/icons/Search';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import {withRouter} from "react-router-dom";
-import {changeSearch, changeSearchGlobal, onSearch} from "../actions/actionCreators";
+import {changeSearch, changeSearchGlobal, onSearch} from "../redux/actions/actionCreators";
 import {connect} from "react-redux";
 import storage from '../service/storage'
+import {changeSearchOpen} from "../redux/actions/actionCreators";
 
 
 class Header extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loader: false,
-            top: [],
-            categories: [],
-            items: [],
-            more: '',
-            search: '',
             searchOpen: false,
-            count: storage.get("basket")?.items?.length || '',
         }
     };
 
     activeStyle = {color: "red"}
 
     Search = () => {
-        //console.log("search")
-        if (this.state.searchOpen) {
-            this.props.changeSearchGlobal(this.props.search)
+        console.log(this.props.searchOpen)
+        if (this.props.searchOpen) {
             this.props.onSearch(this.props.search)
-            this.props.changeSearch('')
-            return (
-                this.props.history.push(`/catalog`),
-                this.setState({searchOpen: false})
-        )
+            return this.props.history.push(`/catalog`)
         }
-        this.setState({searchOpen: true})
-    }
-
-
-    Basket = () => {
-        this.props.changeSearch(this.props.search)
-        return this.props.history.push(`/cart`)
+        this.props.changeSearchOpen()
     }
 
 
@@ -75,7 +58,7 @@ class Header extends React.Component {
                                     </li>
                                 </ul>
                                 <div style={{display: 'flex'}}>
-                                    {this.state.searchOpen && <form data-id="search-form"
+                                    {this.props.searchOpen && <form data-id="search-form"
                                                                     className="header-controls-search-form form-inline ">
                                         <input className="form-control"
                                                placeholder="Поиск"
@@ -86,9 +69,10 @@ class Header extends React.Component {
                                     <div onClick={this.Search}>
                                         <SearchIcon/>
                                     </div>
-                                    <div onClick={this.Basket}>
+                                    <div onClick={() => this.props.history.push(`/cart`)}>
                                         <ShoppingCartIcon/>
-                                        <span className={'header-controls-cart-full'}>{this.state.count}</span>
+                                        <span
+                                            className={'header-controls-cart-full'}>{storage.get("basket")?.items?.length || ''}</span>
                                     </div>
                                 </div>
                             </div>
@@ -102,5 +86,6 @@ class Header extends React.Component {
 }
 
 export default withRouter(connect(state => ({
-    search: state.app.search
-}),{changeSearchGlobal,changeSearch, onSearch})(Header));
+    search: state.search.search,
+    searchOpen: state.search.searchOpen
+}), {changeSearchGlobal, changeSearch, onSearch, changeSearchOpen})(Header));

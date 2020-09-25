@@ -7,7 +7,7 @@ import {
     getCatalogTitle, getTop,
     onLoadMore,
     onSelectItem
-} from "../actions/actionCreators";
+} from "../redux/actions/actionCreators";
 import Loader from 'react-loader-spinner'
 import banner from '../img/banner.jpg'
 
@@ -76,7 +76,7 @@ class MainPage extends React.Component {
                     <h1>Каталог</h1>
                     <Category
                         onSelectAll={(item) => {
-                            this.onSelectItem()
+                            this.onSelectItem(item)
                         }}
                         onSelectItem={(item) => {
                             this.onSelectItem(item)
@@ -108,14 +108,11 @@ class MainPage extends React.Component {
 
 export default withRouter(connect(state => ({
     categories: state.app.categories,
-    // top: state.app.top,
     items: state.catalog.data,
     page: state.catalog.page,
     loadedCategory: state.catalog.loaded,
-    // offset: state.catalog.offset,
-    // currentCategory: state.app.currentCategory,
+    currentCategory: state.catalog.currentCategory,
     lastPage: state.catalog.lastPage,
-    // loadingHit: state.app.loadingHit,
     top: state.top.data,
     loaded: state.top.loaded,
 }), {onSelectItem, getCatalogTitle, onLoadMore, getTop})(MainPage));

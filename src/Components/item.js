@@ -1,7 +1,7 @@
 import React from 'react';
 import {netWorkService} from "../api";
 import {withRouter} from "react-router-dom";
-import {addItems} from "../actions/actionCreators";
+import {addItems} from "../redux/actions/actionCreators";
 import {connect} from "react-redux";
 
 class Item extends React.Component {
@@ -85,9 +85,10 @@ class Item extends React.Component {
                                     onClick={()=> {
                                         console.log('size', item.size)
                                         this.setState({size: item.size})
-                                        //return (className={{}})
                                     }}
-                                    className={`catalog-item-size ${item.avalible ? 'selected' : ""}`}>{item.size} </span>
+                                    style={{backgroundColor: this.state.size == item.size ?  'grey' : 'transparent', padding: '4px', borderRadius: '5px', marginRight: '5px'}}
+
+                                    className={`catalog-item-size selected `}>{item.size} </span>
                             )})}
                             </p>
                             <p>Количество: <span className="btn-group btn-group-sm pl-2">

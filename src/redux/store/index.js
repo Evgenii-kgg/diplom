@@ -6,7 +6,7 @@ import collectionReducer from "../redusers/collectionReducer";
 
 const catalog = collectionReducer({name: 'CATALOG', extraState: {currentCategory: '', searchGlobal:''}})
 const top = collectionReducer({name: 'TOP', extraState: {}})
-const search = collectionReducer({name: 'SEARCH', extraState: {currentCategory: '', searchGlobal:''}})
+const search = collectionReducer({name: 'SEARCH', extraState: {currentCategory: '', searchGlobal:'', searchOpen: false , search: ''}})
 
 const reducer = combineReducers({
     catalog,

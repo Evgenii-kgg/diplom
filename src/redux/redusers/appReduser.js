@@ -4,8 +4,17 @@ import {
     SEARCH_COLLECTION,
     LOAD_MORE,
     CATALOG_TITLE,
-    SELECT_ITEM, SELECT_ALL, GET_HITS, CATALOG_REQUEST, TOP_REQUEST, SEARCH_REQUEST,
+    SELECT_ITEM,
+    SELECT_ALL,
+    GET_HITS,
+    CATALOG_REQUEST,
+    TOP_REQUEST,
+    SEARCH_REQUEST,
+    SUBMIT_SEARCH,
+    SEARCH_OPEN,
+    CHANGE_SEARCH_OPEN
 } from "../actions/actionTypes";
+import storage from "../../service/storage";
 
 
 const initialState = {
@@ -22,6 +31,7 @@ const initialState = {
     loadingHit: false,
     loadingCatalog: false,
     loadingSearch: false,
+    searchOpen: false,
 };
 
 export default function appReducer(state = initialState, action) {
@@ -49,6 +59,10 @@ export default function appReducer(state = initialState, action) {
             return ({...state, loadingHit: action.payload})
         case SEARCH_REQUEST:
             return ({...state, loadingSearch: action.payload})
+        case SUBMIT_SEARCH:
+            return ({...state, searchGlobal: state.search, search: '', searchOpen: false})
+        case CHANGE_SEARCH_OPEN:
+            return ({...state, searchOpen: true})
         default:
             return state;
     }

@@ -1,7 +1,7 @@
 import React from "react";
 import {useDispatch, connect} from "react-redux";
 import {netWorkService} from "../api";
-import {changePhone, changeAddress, deleteItems, clearItems} from "../actions/actionCreators";
+import {changePhone, changeAddress, deleteItems, clearItemsBasket} from "../redux/actions/actionCreators";
 // import storage from "../service/storage";
 
 
@@ -10,7 +10,13 @@ function Basket(props) {
     //const item = useSelector((state) => state.basket);
     const dispatch = useDispatch();
 
+    const disabled = props.address.length == '' || props.phone.length == ''
+
+
     const Order = () => {
+        if(disabled) {
+            alert('заполните данные')
+        }else {
         return netWorkService({
             url: "order", method: "POST", body: {
                 'owner': {'phone': props.phone, 'address': props.address}, 'item': props.items
@@ -19,11 +25,13 @@ function Basket(props) {
             .then((response) => {
                 console.log("ответ", response);
                 window.localStorage.removeItem('basket');
-                dispatch(clearItems)
                 alert('Спасибо за заказ')
                 props.history.push(`/`)
+                dispatch(clearItemsBasket())
             });
+        }
     }
+
 
     const deleteItem = (id) => {
         dispatch(deleteItems(id))
@@ -104,10 +112,12 @@ function Basket(props) {
                                     className="form-check-input"
                                     id="agreement">
                                 </input>
-                                <label className="form-check-label" htmlFor="agreement">Согласен с правилами
+                                <label className="form-check-label"
+                                       htmlFor="agreement">Согласен с правилами
                                     доставки</label>
                             </div>
                             <button type="submit" className="btn btn-outline-secondary"
+                                    disabled={disabled}
                                     onClick={(e) => {
                                         e.preventDefault();
                                         Order()
