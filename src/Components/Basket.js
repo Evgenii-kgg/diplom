@@ -1,7 +1,7 @@
 import React from "react";
 import {useDispatch, connect} from "react-redux";
-import {netWorkService} from "../api";
-import {changePhone, changeAddress, deleteItems, clearItemsBasket} from "../redux/actions/actionCreators";
+import {api} from "../service/api";
+import {changePhone, changeAddress, deleteItems, clearItemsBasket} from "../redux/actionCreators/actionCreators";
 // import storage from "../service/storage";
 
 
@@ -17,7 +17,7 @@ function Basket(props) {
         if(disabled) {
             alert('заполните данные')
         }else {
-        return netWorkService({
+        return api({
             url: "order", method: "POST", body: {
                 'owner': {'phone': props.phone, 'address': props.address}, 'item': props.items
             }

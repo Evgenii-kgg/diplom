@@ -3,10 +3,9 @@ import header_logo from '../img/header-logo.png'
 import SearchIcon from '@material-ui/icons/Search';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import {withRouter} from "react-router-dom";
-import {changeSearch, changeSearchGlobal, onSearch} from "../redux/actions/actionCreators";
+import {changeSearch, changeSearchGlobal, onSearch, changeSearchOpen} from "../redux/actionCreators/actionCreators";
 import {connect} from "react-redux";
 import storage from '../service/storage'
-import {changeSearchOpen} from "../redux/actions/actionCreators";
 
 
 class Header extends React.Component {

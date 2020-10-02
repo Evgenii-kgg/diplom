@@ -10,7 +10,7 @@ import {
     onLoadMoreCatalog,
     onSearch,
     onSelectItemCatalog
-} from "../redux/actions/actionCreators";
+} from "../redux/actionCreators/actionCreators";
 import {connect} from "react-redux";
 import Loader from 'react-loader-spinner'
 import banner from '../img/banner.jpg'

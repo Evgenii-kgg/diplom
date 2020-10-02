@@ -1,7 +1,7 @@
 import React from 'react';
-import {netWorkService} from "../api";
+import {api} from "../service/api";
 import {withRouter} from "react-router-dom";
-import {addItems} from "../redux/actions/actionCreators";
+import {addItems} from "../redux/actionCreators/actionCreators";
 import {connect} from "react-redux";
 
 class Item extends React.Component {
@@ -20,7 +20,7 @@ class Item extends React.Component {
     };
 
     getItem = () => {
-        return netWorkService({url: `items/${this.props.match.params.id}`, method: "GET"})
+        return api({url: `items/${this.props.match.params.id}`, method: "GET"})
             .then((response) => {
                 console.log("ответ", response);
                 this.setState({item: response, loader: true});

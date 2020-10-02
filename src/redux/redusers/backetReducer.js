@@ -1,4 +1,4 @@
-import {CHANGE_PHONE, CHANGE_ADDRESS, ADD_ITEMS, DELETE_ITEMS, CLEAR_ITEMS_BASKET} from "../actions/actionTypes";
+import {CHANGE_PHONE, CHANGE_ADDRESS, ADD_ITEMS, DELETE_ITEMS, CLEAR_ITEMS_BASKET} from "../actionTypes/actionTypes";
 import storage from '../../service/storage'
 
 

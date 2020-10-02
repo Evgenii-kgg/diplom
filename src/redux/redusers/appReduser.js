@@ -13,7 +13,7 @@ import {
     SUBMIT_SEARCH,
     SEARCH_OPEN,
     CHANGE_SEARCH_OPEN
-} from "../actions/actionTypes";
+} from "../actionTypes/actionTypes";
 import storage from "../../service/storage";
 
 

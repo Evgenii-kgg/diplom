@@ -17,8 +17,8 @@ import {
     SEARCH_CLEAR,
     CLEAR_ITEMS,
     CLEAR_ITEMS_BASKET, CHANGE_SEARCH_OPEN, SUBMIT_SEARCH,
-} from "./actionTypes";
-import {netWorkService} from "../../api";
+} from "../actionTypes/actionTypes";
+import {api} from "../../service/api";
 
 
 export function changePhone(phone) {
@@ -64,7 +64,7 @@ export function onSearch (query) {
         dispatch({type: SEARCH_CHANGE_EXTRA, payload: {searchGlobal: query, searchOpen: false, search: ''}})
         dispatch({type: SEARCH_CLEAR })
         dispatch({type: SEARCH_REQUEST, payload: true })
-        return netWorkService({url: `items?q=${query}`, method: "GET"}).then(
+        return api({url: `items?q=${query}`, method: "GET"}).then(
             (response)=> dispatch({type: SEARCH_SUCCESS, payload: {data: response} })
         )
     };
@@ -73,7 +73,7 @@ export function onSearch (query) {
 export function onLoadMore (page, category) {
     return (dispatch) => {
         dispatch({type: CATALOG_REQUEST})
-        return netWorkService({url: !category ? `items?offset=${page}` : `items?categoryId=${category}&offset=${page}`, method: "GET"}).then(
+        return api({url: !category ? `items?offset=${page}` : `items?categoryId=${category}&offset=${page}`, method: "GET"}).then(
             (response)=> {
                 dispatch({type: CATALOG_SUCCESS, payload: {data: response , page: page} })
             }
@@ -84,7 +84,7 @@ export function onLoadMore (page, category) {
 export function onLoadMoreCatalog (page, category) {
     return (dispatch) => {
         dispatch({type: SEARCH_REQUEST})
-        return netWorkService({url: `items?categoryId=${category}&offset=${page}`, method: "GET"}).then(
+        return api({url: !category ? `items?offset=${page}` : `items?categoryId=${category}&offset=${page}`, method: "GET"}).then(
             (response)=> {
                 dispatch({type: SEARCH_SUCCESS, payload: {data: response , page: page} })
             }
@@ -94,7 +94,7 @@ export function onLoadMoreCatalog (page, category) {
 
 export function getCatalogTitle () {
     return (dispatch) => {
-        return netWorkService({url: `categories`, method: "GET"}).then(
+        return api({url: `categories`, method: "GET"}).then(
             (response)=> dispatch({type: CATALOG_TITLE, payload: response })
         )
     };
@@ -105,7 +105,7 @@ export function onSelectItem (query) {
         dispatch({type: CATALOG_CLEAR })
         dispatch({type: CATALOG_REQUEST, payload: true })
          dispatch({type: CATALOG_CHANGE_EXTRA , payload: {currentCategory: query}})
-        return netWorkService({url: !query ? `items`:`items?categoryId=${query}`, method: "GET"}).then(
+        return api({url: !query ? `items`:`items?categoryId=${query}`, method: "GET"}).then(
             (response)=> dispatch({type: CATALOG_SUCCESS, payload: {data: response } })
         )
     };
@@ -116,7 +116,7 @@ export function onSelectItemCatalog (query) {
         dispatch({type: SEARCH_CLEAR })
         dispatch({type: SEARCH_REQUEST, payload: true })
         dispatch({type: SEARCH_CHANGE_EXTRA , payload: {currentCategory: query}})
-        return netWorkService({url: !query ? `items`:`items?categoryId=${query}`, method: "GET"}).then(
+        return api({url: !query ? `items`:`items?categoryId=${query}`, method: "GET"}).then(
             (response)=> dispatch({type: SEARCH_SUCCESS, payload: {data: response } })
         )
     };
@@ -125,7 +125,7 @@ export function onSelectItemCatalog (query) {
 export function getTop () {
     return (dispatch) => {
         dispatch({type: TOP_REQUEST, payload: true })
-        return netWorkService({url: `top-sales`, method: "GET"}).then(
+        return api({url: `top-sales`, method: "GET"}).then(
             (response)=> dispatch({type: TOP_SUCCESS, payload: {data: response} })
         )
     };

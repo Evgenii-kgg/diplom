@@ -7,7 +7,7 @@ import {
     getCatalogTitle, getTop,
     onLoadMore,
     onSelectItem
-} from "../redux/actions/actionCreators";
+} from "../redux/actionCreators/actionCreators";
 import Loader from 'react-loader-spinner'
 import banner from '../img/banner.jpg'
 
@@ -59,7 +59,7 @@ class MainPage extends React.Component {
                 <div className={"style"} style={{textAlign: 'center'}}>
                     <h1>Хиты продаж</h1>
                 </div>
-                <div className={"hits"}>
+                <div className={"hits"} style={{}}>
                     {this.props.loaded ? <Loader
                         type="Oval"
                         color="#00BFFF"
@@ -72,7 +72,7 @@ class MainPage extends React.Component {
                         }}
                         items={this.props.top}/>}
                 </div>
-                <div className={'catalog'} style={{textAlign: 'center'}}>
+                <div className={'category'} style={{textAlign: 'center'}}>
                     <h1>Каталог</h1>
                     <Category
                         onSelectAll={(item) => {
@@ -84,7 +84,7 @@ class MainPage extends React.Component {
                         items={this.props.categories}
                     />
                 </div>
-                <div className={'catalog-list'}>
+                <div className={'catalog-list'} style={{}}>
                     {this.props.loadedCategory ? <Loader
                         type="Oval"
                         color="#00BFFF"

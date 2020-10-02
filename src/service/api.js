@@ -1,5 +1,5 @@
 
-export const netWorkService = ({ url, method, body }) => {
+export const api = ({ url, method, body }) => {
     console.log("dfdf", method, body, url);
 
     const name = body ? JSON.stringify(body) : null;
